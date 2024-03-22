@@ -2,6 +2,7 @@
 """ Module for testing file storage"""
 import unittest
 from models.base_model import BaseModel
+from models.state import State
 from models import storage
 import os
 
@@ -21,7 +22,7 @@ class test_fileStorage(unittest.TestCase):
         """ Remove storage file at end of tests """
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_obj_list_empty(self):
@@ -35,11 +36,25 @@ class test_fileStorage(unittest.TestCase):
             temp = obj
         self.assertTrue(temp is obj)
 
+    def test_delete(self):
+        """An object is correctly removed from __objects"""
+        new = BaseModel()
+        storage.delete()
+        self.assertTrue(new in storage.all().values())
+        storage.delete(new)
+        self.assertTrue(new not in storage.all().values())
+
     def test_all(self):
         """ __objects is properly returned """
         new = BaseModel()
         temp = storage.all()
         self.assertIsInstance(temp, dict)
+
+        new_state = State()
+        all_states = storage.all(State)
+        self.assertIsInstance(all_states, dict)
+        self.assertTrue(new_state in all_states.values())
+        self.assertTrue(new not in all_states.values())
 
     def test_base_model_instantiation(self):
         """ File is not created on BaseModel save """
@@ -105,5 +120,4 @@ class test_fileStorage(unittest.TestCase):
     def test_storage_var_created(self):
         """ FileStorage object storage created """
         from models.engine.file_storage import FileStorage
-      #  print(type(storage))
         self.assertEqual(type(storage), FileStorage)
