@@ -97,3 +97,12 @@ class test_basemodel(unittest.TestCase):
         n = new.to_dict()
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
+
+    def test_delete(self):
+        """tests delete the current instance from the storage""" 
+        from models import storage
+        new = BaseModel()
+        new.save()
+        self.assertTrue(new in storage.all().values())
+        new.delete()
+        self.assertTrue(new not in storage.all().values())

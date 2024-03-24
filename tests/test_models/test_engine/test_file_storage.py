@@ -32,6 +32,7 @@ class test_fileStorage(unittest.TestCase):
     def test_new(self):
         """ New object is correctly added to __objects """
         new = BaseModel()
+        new.save()
         for obj in storage.all().values():
             temp = obj
         self.assertTrue(temp is obj)
@@ -39,6 +40,7 @@ class test_fileStorage(unittest.TestCase):
     def test_delete(self):
         """An object is correctly removed from __objects"""
         new = BaseModel()
+        new.save()
         storage.delete()
         self.assertTrue(new in storage.all().values())
         storage.delete(new)
@@ -47,10 +49,12 @@ class test_fileStorage(unittest.TestCase):
     def test_all(self):
         """ __objects is properly returned """
         new = BaseModel()
+        new.save()
         temp = storage.all()
         self.assertIsInstance(temp, dict)
 
         new_state = State()
+        new_state.save()
         all_states = storage.all(State)
         self.assertIsInstance(all_states, dict)
         self.assertTrue(new_state in all_states.values())
@@ -78,6 +82,7 @@ class test_fileStorage(unittest.TestCase):
     def test_reload(self):
         """ Storage file is successfully loaded to __objects """
         new = BaseModel()
+        new.save()
         storage.save()
         storage.reload()
         for obj in storage.all().values():
@@ -112,6 +117,7 @@ class test_fileStorage(unittest.TestCase):
     def test_key_format(self):
         """ Key is properly formatted """
         new = BaseModel()
+        new.save()
         _id = new.to_dict()['id']
         for key in storage.all().keys():
             temp = key
