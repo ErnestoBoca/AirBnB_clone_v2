@@ -9,6 +9,7 @@ from datetime import datetime
 
 
 def do_pack():
+    """creates a version of the project"""
     try:
         if isdir("versions") is False:
             local("mkdir versions")
