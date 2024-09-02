@@ -16,7 +16,7 @@ def do_pack():
         date = datetime.now().strftime("%Y%m%d%H%M%S")
         file_name = "versions/web_static_{}.tgz".format(date)
         local("tar -cvzf {} web_static".format(file_name))
-        return filr_name
+        return file_name
     except:
         return None
 
@@ -44,3 +44,12 @@ def do_deploy(archive_path):
         return True
     except:
         return False
+
+
+def deploy():
+    """reates and distributes an archive to your the servers
+    using the function deploy"""
+    file_path = do_pack()
+    if file_path is None:
+        return False
+    return do_deploy(file_path)
