@@ -51,7 +51,7 @@ def odd_or_even(n):
         number_type = "even"
     else:
         number_type = "odd"
-    return render_template("6-number_odd_or_even.html", 
+    return render_template("6-number_odd_or_even.html",
                            n=n, number_type=number_type)
 
 
