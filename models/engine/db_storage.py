@@ -63,7 +63,7 @@ class DBStorage:
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
-            session.delete(obj)
+            self.__session.delete(obj)
 
     def reload(self):
         """create all tables in the database"""
@@ -73,4 +73,4 @@ class DBStorage:
 
     def close(self):
         """Closes a Connection"""
-        self.__section.remove()
+        self.__session.remove()
