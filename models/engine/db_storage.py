@@ -37,13 +37,15 @@ class DBStorage:
         if env == "test":
             Base.metadata.drop_all(self.__engine)
 
-    def all(self, cls=None):
+    def all2(self, cls=None):
         """query on the current database session (self.__session) all
         objects depending of the class name (argument cls)"""
         obj_dict = {}
         obj_list = []
         if cls is not None:
-            obj_list = self.__session.query(cls).all()
+            print("{} classe: {}".format(cls, classes[cls]))
+            obj_list = self.__session.query(classes[cls]).all()
+            print(obj_list)
         else:
             for clss in classes.values():
                 print(clss.__name__)
@@ -52,6 +54,17 @@ class DBStorage:
             obj_dict[obj.__class__.__name__ + "." + obj.id] = obj
 
         return obj_dict
+
+    def all(self, cls=None):
+        """query on the current database session"""
+        new_dict = {}
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    new_dict[key] = obj.to_dict()
+        return (new_dict)
 
     def new(self, obj):
         """add the object to the current database session"""
