@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """This script fetches data from the database and prints on the screen"""
 
 
