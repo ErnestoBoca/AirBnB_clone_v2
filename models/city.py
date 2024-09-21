@@ -12,4 +12,9 @@ class City(BaseModel, Base):
     __tablename__ = "cities"
     name = Column(String(128), nullable=False)
     state_id = Column(String(60), ForeignKey("states.id"))
-    places = relationship("Place", cascade="delete", backref="cities")
+    places = relationship("Place",  backref="cities")
+
+
+    def __init__(self, *args, **kwargs):
+        """initializes state"""
+        super().__init__(*args, **kwargs)

@@ -10,3 +10,8 @@ class Review(BaseModel, Base):
     text = Column(String(128), nullable=False)
     place_id = Column(String(60), ForeignKey("places.id"), nullable=False)
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
+
+
+    def __init__(self, *args, **kwargs):
+        """initializes state"""
+        super().__init__(*args, **kwargs)

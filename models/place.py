@@ -28,6 +28,12 @@ class Place(BaseModel, Base):
     reviews = relationship("Review", backref="place", cascade="delete")    
     amenities = relationship("Amenity", secondary="place_amenity", backref="place_amenities", viewonly=False)
     
+
+    def __init__(self, *args, **kwargs):
+        """initializes state"""
+        super().__init__(*args, **kwargs)
+
+
     if os.getenv("HBNB_TYPE_STORAGE") != "db":
         @property
         def reviews(self):
